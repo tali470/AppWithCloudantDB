@@ -3,8 +3,6 @@
  */
 
 var express = require('express'),
-  routes = require('./routes'),
-  user = require('./routes/user'),
   http = require('http'),
   path = require('path'),
   fs = require('fs')
@@ -30,9 +28,10 @@ var multipartMiddleware = multipart()
 
 // all environments
 app.set('port', process.env.PORT || 3000)
-app.set('views', __dirname + '/views')
+// app.set('views', __dirname + '/views')
 app.set('view engine', 'ejs')
-app.engine('html', require('ejs').renderFile)
+
+// app.engine('html', require('ejs').renderFile)
 app.use(logger('dev'))
 app.use(bodyParser.urlencoded({
   extended: true
@@ -84,7 +83,17 @@ function initDBConnection () {
 
 initDBConnection()
 
-app.get('/', routes.index)
+app.get('/', function (req, res) {
+  res.render('form')
+})
+
+app.get('/list', function (req, res) {
+  res.render('list')
+})
+
+// app.get('/list', function (req, res) {
+//   res.render('list')
+// })
 
 function createResponseData (id, name, value, attachments) {
   var responseData = {
@@ -175,33 +184,33 @@ app.post('/api/favorites/attach', multipartMiddleware, function (request, respon
                 console.log('Attachment saved successfully.. ')
 
                 db.get(document.id, function (err, doc) {
-                    console.log('Attachements from server --> ' + JSON.stringify(doc._attachments))
+                  console.log('Attachements from server --> ' + JSON.stringify(doc._attachments))
 
-                    var attachements = []
-                    var attachData
-                    for (var attachment in doc._attachments) {
-                        if (attachment == value) {
-                            attachData = {
-                              'key': attachment,
-                              'type': file.type
-                            }
-                          } else {
-                            attachData = {
-                              'key': attachment,
-                              'type': doc._attachments[attachment]['content_type']
-                            }
-                          }
-                        attachements.push(attachData)
+                  var attachements = []
+                  var attachData
+                  for (var attachment in doc._attachments) {
+                    if (attachment == value) {
+                      attachData = {
+                        'key': attachment,
+                        'type': file.type
                       }
-                    var responseData = createResponseData(
+                    } else {
+                      attachData = {
+                        'key': attachment,
+                        'type': doc._attachments[attachment]['content_type']
+                      }
+                    }
+                    attachements.push(attachData)
+                  }
+                  var responseData = createResponseData(
                                         id,
                                         name,
                                         value,
                                         attachements)
-                    console.log('Response after attachment: \n' + JSON.stringify(responseData))
-                    response.write(JSON.stringify(responseData))
-                    response.end()
-                  })
+                  console.log('Response after attachment: \n' + JSON.stringify(responseData))
+                  response.write(JSON.stringify(responseData))
+                  response.end()
+                })
               } else {
                 console.log(err)
               }
@@ -347,14 +356,14 @@ app.get('/api/favorites', function (request, response) {
               if (doc['_attachments']) {
                 var attachments = []
                 for (var attribute in doc['_attachments']) {
-                    if (doc['_attachments'][attribute] && doc['_attachments'][attribute]['content_type']) {
-                      attachments.push({
-                            'key': attribute,
-                            'type': doc['_attachments'][attribute]['content_type']
-                          })
-                    }
-                    console.log(attribute + ': ' + JSON.stringify(doc['_attachments'][attribute]))
+                  if (doc['_attachments'][attribute] && doc['_attachments'][attribute]['content_type']) {
+                    attachments.push({
+                      'key': attribute,
+                      'type': doc['_attachments'][attribute]['content_type']
+                    })
                   }
+                  console.log(attribute + ': ' + JSON.stringify(doc['_attachments'][attribute]))
+                }
                 var responseData = createResponseData(
                                     doc._id,
                                     doc.name,

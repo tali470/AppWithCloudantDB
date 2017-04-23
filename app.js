@@ -47,6 +47,31 @@ if (app.get('env') == 'development') {
   app.use(errorHandler())
 }
 
+function displayTime() {
+    var str = "";
+
+    var currentTime = new Date()
+    var date = currentTime.getDate()
+    var month = currentTime.getMonth()+1
+    var hours = currentTime.getHours()
+    var minutes = currentTime.getMinutes()
+    var seconds = currentTime.getSeconds()
+
+    if (minutes < 10) {
+        minutes = "0" + minutes
+    }
+    if (seconds < 10) {
+        seconds = "0" + seconds
+    }
+    str += date + "/" + month + "   " + hours + ":" + minutes + ":" + seconds + " ";
+    if(hours > 11){
+        str += "PM"
+    } else {
+        str += "AM"
+    }
+    return str;
+}
+
 function initDBConnection () {
     // When running on Bluemix, this variable will be set to a json object
     // containing all the service credentials of all the bound services
@@ -84,9 +109,11 @@ function initDBConnection () {
 
 initDBConnection()
 
+
 app.get('/', function (req, res) {
   res.render('form')
 })
+
 
 app.post('/', function (req, res) {
   console.log('Create Invoked..')
@@ -99,12 +126,15 @@ app.post('/', function (req, res) {
   var email = req.body.email
   var telephone = req.body.tel
   var location = req.body.select
+  var regDatetime = displayTime()
+
 
   var formData = {
     name: name,
     email: email,
     telephone: telephone,
-    location: location
+    location: location,
+    datetime: regDatetime
   }
 
   saveDocument(null, formData)

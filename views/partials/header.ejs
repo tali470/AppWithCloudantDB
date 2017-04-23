@@ -11,8 +11,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="list">Results</a></li>
+            <li<% if (page == 'form') { %> class="active"<% } %>><a href="/">Home</a></li>
+            <li<% if (page == 'list') { %> class="active"<% } %>><a href="list">Results</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include partials/head %>
+  </head>
+  <body>
+    <%- include('partials/header', {page: 'list'}); %>
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>Registrations</h1>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Date time</th>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(var i=0; i<docs.length; i++) {%>
+                <tr>
+                  <td><%= i+1 %></td>
+                  <td><%= docs[i].name %></td>
+                  <td><%= docs[i].email %></td>
+                  <td><%= docs[i].telephone %></td>
+                  <td><%= docs[i].datetime %></td>
+                  <td><%= docs[i].location %></td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /.container -->
+
+    <% include partials/footer %>
+  </body>
+</html>

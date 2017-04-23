@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include partials/head %>
+  </head>
+  <body>
+    <%- include('partials/header', {page: 'form'}); %>
+
+    <div class="container">
+      <h1>You’re Invited</h1>
+
+      <form class="form" method="post" action="/">
+       <div class="form-group ">
+        <label class="control-label requiredField" for="name">
+         Name
+         <span class="asteriskField">
+          *
+         </span>
+        </label>
+        <input class="form-control" id="name" name="name" type="text" required="required">
+       </div>
+       <div class="form-group ">
+        <label class="control-label requiredField" for="email">
+         Email
+         <span class="asteriskField">
+          *
+         </span>
+        </label>
+        <input class="form-control" id="email" name="email" type="email" required="required">
+       </div>
+       <div class="form-group ">
+        <label class="control-label " for="tel">
+         Telephone #
+        </label>
+        <input class="form-control" id="tel" name="tel" type="text">
+       </div>
+       <div class="form-group ">
+        <label class="control-label requiredField" for="select">
+         Select a Choice
+         <span class="asteriskField">
+          *
+         </span>
+        </label>
+        <select class="select form-control" id="select" name="select" required="required">
+         <option value="">Please select</option>
+         <option value="Wellington">
+          Wellington - Date: 04/05 - Location: IBM office
+         </option>
+         <option value="Auckland">
+          Auckland - Date: 05/05 - Location: IBM office
+         </option>
+         <option value="Sydney">
+          Sydney  - Date: 08/05 - Location: IBM office
+         </option>
+         <option value="Melbourne">
+          Melbourne  - Date: 09/05 - Location: IBM office
+         </option>
+         <option value="Canberra">
+          Canberra  - Date: 10/05 - Location: IBM office
+         </option>
+        </select>
+       </div>
+       <div class="form-group">
+        <div>
+         <button class="btn btn-primary btn-lg btn-block" name="submit" type="submit">
+          Submit
+         </button>
+        </div>
+       </div>
+      </form>
+    </div><!-- /.container -->
+
+    <% include partials/footer %>
+  </body>
+</html>

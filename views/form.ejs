@@ -7,8 +7,9 @@
     <% include partials/header %>
 
     <div class="container">
+      <h1>You’re Invited</h1>
 
-      <form class="form" method="post">
+      <form class="form" method="post" action="/">
        <div class="form-group ">
         <label class="control-label requiredField" for="name">
          Name
@@ -16,7 +17,7 @@
           *
          </span>
         </label>
-        <input class="form-control" id="name" name="name" type="text">
+        <input class="form-control" id="name" name="name" type="text" required="required">
        </div>
        <div class="form-group ">
         <label class="control-label requiredField" for="email">
@@ -25,7 +26,7 @@
           *
          </span>
         </label>
-        <input class="form-control" id="email" name="email" type="text">
+        <input class="form-control" id="email" name="email" type="email" required="required">
        </div>
        <div class="form-group ">
         <label class="control-label " for="tel">
@@ -40,7 +41,14 @@
           *
          </span>
         </label>
-        <select class="select form-control" id="select" name="select">
+        <select class="select form-control" id="select" name="select" required="required">
+         <option value="">Please select</option>
+         <option value="Wellington">
+          Wellington
+         </option>
+         <option value="Auckland">
+          Auckland
+         </option>
          <option value="Sydney">
           Sydney
          </option>
@@ -50,38 +58,7 @@
          <option value="Canberra">
           Canberra
          </option>
-         <option value="Wellington">
-          Wellington
-         </option>
-         <option value="Auckland">
-          Auckland
-         </option>
         </select>
-       </div>
-       <div class="form-group ">
-        <label class="control-label ">
-         Check all that apply
-        </label>
-        <div class=" ">
-         <div class="checkbox">
-          <label class="checkbox">
-           <input name="checkbox" type="checkbox" value="First Choice">
-           First Choice
-          </label>
-         </div>
-         <div class="checkbox">
-          <label class="checkbox">
-           <input name="checkbox" type="checkbox" value="Second Choice">
-           Second Choice
-          </label>
-         </div>
-         <div class="checkbox">
-          <label class="checkbox">
-           <input name="checkbox" type="checkbox" value="Third Choice">
-           Third Choice
-          </label>
-         </div>
-        </div>
        </div>
        <div class="form-group">
         <div>

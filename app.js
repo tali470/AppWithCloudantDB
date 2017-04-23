@@ -5,7 +5,8 @@
 var express = require('express'),
   http = require('http'),
   path = require('path'),
-  fs = require('fs')
+  fs = require('fs'),
+  util = require('util')
 
 var app = express()
 
@@ -87,6 +88,30 @@ app.get('/', function (req, res) {
   res.render('form')
 })
 
+app.post('/', function (req, res) {
+  console.log('Create Invoked..')
+  console.log('Name: ' + req.body.name)
+  console.log('POST: ' + util.inspect(req.body, false, null))
+
+
+    // var id = req.body.id;
+  var name = req.body.name
+  //var value = req.body.value
+  var email = req.body.email
+  var telephone = req.body.tel
+  var location = req.body.select
+
+  var formData = {
+    name: name,
+    email: email,
+    telephone: telephone,
+    location: location
+  }
+
+  saveDocument(null, formData)
+  res.render('success')
+})
+
 app.get('/list', function (req, res) {
   res.render('list')
 })
@@ -114,21 +139,17 @@ function createResponseData (id, name, value, attachments) {
   return responseData
 }
 
-var saveDocument = function (id, name, value, response) {
+var saveDocument = function (id, formData) {
   if (id === undefined) {
         // Generated random id
     id = ''
   }
 
-  db.insert({
-    name: name,
-    value: value
-  }, id, function (err, doc) {
+  console.log('trying to save document', util.inspect(formData, false, null))
+  db.insert(formData, id, function (err, doc) {
     if (err) {
       console.log(err)
-      response.sendStatus(500)
-    } else { response.sendStatus(200) }
-    response.end()
+    }
   })
 }
 
